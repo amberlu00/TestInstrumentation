@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInstrumentation", "TestInstrumentation\TestInstrumentation.csproj", "{B7AA0323-C673-4988-9BA7-BBAA6146DCDB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A156626-BB95-4F1C-A426-49B197357B19}"
+	ProjectSection(SolutionItems) = preProject
+		TestInstrumentation\TestInstrumentation.csproj = TestInstrumentation\TestInstrumentation.csproj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
