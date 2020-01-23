@@ -5,23 +5,26 @@ namespace TestInstrumentation
 {
     public class Logger
     {
+
+        private string appType;
         /**
          * Class for the logger.
          * @param appType: "Producer" or "Consumer". Used in file naming.
          */
         public Logger(string appType)
         {
+            this.appType = appType;
             Log.Logger = new LoggerConfiguration().
                 WriteTo.File(string.Concat(appType, ".txt"),
                 rollingInterval: RollingInterval.Day).CreateLogger();
         }
 
         /**
-         * Logs a status, denoted by [INF].
+         * Logs a status.
          * @param info: status to log
          */
         public void LogStatus(string info) {
-            Log.Information(string.Concat("{Now}", info, "\n"), DateTime.Now);
+            Log.Information(string.Concat("{From}: ", info), appType);
         }
 
         /**
@@ -30,7 +33,17 @@ namespace TestInstrumentation
          */
         public void LogError(string info)
         {
-            Log.Error(string.Concat("{Now}", info, "\n"), DateTime.Now);
+            Log.Error(string.Concat("{From}: ", info), appType);
+        }
+
+        public void LogFatal(string info)
+        {
+            Log.Fatal(string.Concat("{From}: ", info), appType);
+        }
+
+        public void LogWarning(string info)
+        {
+            Log.Warning(string.Concat("{From}: ", info), appType);
         }
     }
 }
