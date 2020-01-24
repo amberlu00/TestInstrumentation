@@ -18,18 +18,16 @@ namespace TestInstrumentation
             Log.Logger = new LoggerConfiguration().
                 WriteTo.File(string.Concat(appType, ".txt"),
                 rollingInterval: RollingInterval.Day).CreateLogger();
-
-            Dictionary<string, string> keyToLog = new Dictionary<string, string>();
         }
 
         /**
          * Logs a status.
          * @param info: status to log
          */
-        public void LogStatus(string info) {
+        public void LogStatus(string info)
+        {
             Log.Information(string.Concat("{From}: ", info), appType);
         }
-
         /**
          * Logs an error.
          * @param info: error to log
@@ -39,11 +37,16 @@ namespace TestInstrumentation
             Log.Error(string.Concat("{From}: ", info), appType);
         }
 
+        /**
+         * Logs fatal errors.
+         */
         public void LogFatal(string info)
         {
             Log.Fatal(string.Concat("{From}: ", info), appType);
         }
-
+        /**
+         * Logs warnings.
+         */
         public void LogWarning(string info)
         {
             Log.Warning(string.Concat("{From}: ", info), appType);
