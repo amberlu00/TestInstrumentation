@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace TestInstrumentation
 {
-    public class Logger
+    public class BaseLogger
     {
 
         private string appType;
@@ -12,7 +12,7 @@ namespace TestInstrumentation
          * Class for the logger.
          * @param appType: "Producer" or "Consumer". Used in file naming.
          */
-        public Logger(string appType)
+        public BaseLogger(string appType)
         {
             this.appType = appType;
             Log.Logger = new LoggerConfiguration().
@@ -26,7 +26,7 @@ namespace TestInstrumentation
          */
         public void LogStatus(string info)
         {
-            Log.Information(string.Concat("{From}: ", info), appType);
+            Log.Information(info);
         }
         /**
          * Logs an error.
@@ -34,7 +34,7 @@ namespace TestInstrumentation
          */
         public void LogError(string info)
         {
-            Log.Error(string.Concat("{From}: ", info), appType);
+            Log.Error(info);
         }
 
         /**
@@ -42,14 +42,19 @@ namespace TestInstrumentation
          */
         public void LogFatal(string info)
         {
-            Log.Fatal(string.Concat("{From}: ", info), appType);
+            Log.Fatal(info);
         }
         /**
          * Logs warnings.
          */
         public void LogWarning(string info)
         {
-            Log.Warning(string.Concat("{From}: ", info), appType);
+            Log.Warning(info);
+        }
+
+        public void LogDebug(string info)
+        {
+            Log.Debug(info);
         }
     }
 }
