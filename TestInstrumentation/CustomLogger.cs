@@ -5,13 +5,13 @@ namespace TestInstrumentation
 {
     public class CustomLogger
     {
-        private Dictionary<string, string> KeyToLog { get; set; }
+        private Dictionary<string, FormattableString> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
-            KeyToLog = new Dictionary<string, string>();
+            KeyToLog = new Dictionary<string, FormattableString>();
         }
 
         /**
@@ -19,7 +19,7 @@ namespace TestInstrumentation
          * @key: The keyword to map to the template
          * @value: the interpolated template
          */
-        public void AddUniqueLogType(string key, string value)
+        public void AddUniqueLogType(string key, FormattableString value)
         {
             KeyToLog.Add(key, value);
         }
@@ -32,8 +32,8 @@ namespace TestInstrumentation
          */
         public void FormattedLog(string sev, string key, params string[] args)
         {
-            string str = String.Format(KeyToLog.GetValueOrDefault(key), args);
-            RawLog(sev, str);
+            FormattableString str = KeyToLog.GetValueOrDefault(key);
+            RawLog(sev, string.Format(str.Format, args));
         }
         /**
          * Log a string directly to the sink.
@@ -43,7 +43,7 @@ namespace TestInstrumentation
         public void RawLog(string sev, string info)
         {
             switch (sev)
-			{
+            {
                 case "INFO":
                     Logger.LogStatus(info);
                     break;
