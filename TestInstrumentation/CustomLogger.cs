@@ -16,6 +16,8 @@ namespace TestInstrumentation
 
         /**
          * Additional function to add new logging strings when necessary.
+         * @key: The keyword to map to the template
+         * @value: the interpolated template
          */
         public void AddUniqueLogType(string key, string value)
         {
@@ -23,34 +25,21 @@ namespace TestInstrumentation
         }
 
         /**
-         * 
+         * Call this to generate a log from a template.
+         * @param sev: The severity of the message
+         * @param key: The keyword which maps to the template
+         * @param args: A variable number of string arguments
          */
         public void FormattedLog(string sev, string key, params string[] args)
         {
             string str = String.Format(KeyToLog.GetValueOrDefault(key), args);
-            switch (sev)
-            {
-                case "INFO":
-                    Logger.LogStatus(str);
-                    break;
-                case "ERR":
-                    Logger.LogError(str);
-                    break;
-                case "WARN":
-                    Logger.LogWarning(str);
-                    break;
-                case "FATAL":
-                    Logger.LogFatal(str);
-                    break;
-                case "DEBUG":
-                    Logger.LogDebug(str);
-                    break;
-                default:
-                    Logger.LogWarning(sev + " is not a valid severity level.");
-                    Logger.LogStatus(str);
-                    break;
-            }
+            RawLog(sev, str);
         }
+        /**
+         * Log a string directly to the sink.
+         * @param sev: The severity of the message
+         * @param info: The string to log
+         */
         public void RawLog(string sev, string info)
         {
             switch (sev)
