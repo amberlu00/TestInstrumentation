@@ -11,7 +11,4 @@
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="3.0.4" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Tester.cs" />
-  </ItemGroup>
 </Project>
