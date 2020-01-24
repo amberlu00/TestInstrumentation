@@ -1,5 +1,6 @@
 ﻿using System;
 using Serilog;
+using System.Collections.Generic;
 
 namespace TestInstrumentation
 {
@@ -17,6 +18,8 @@ namespace TestInstrumentation
             Log.Logger = new LoggerConfiguration().
                 WriteTo.File(string.Concat(appType, ".txt"),
                 rollingInterval: RollingInterval.Day).CreateLogger();
+
+            Dictionary<string, string> keyToLog = new Dictionary<string, string>();
         }
 
         /**
