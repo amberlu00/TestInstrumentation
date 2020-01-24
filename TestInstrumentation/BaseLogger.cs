@@ -1,6 +1,5 @@
 ﻿using System;
 using Serilog;
-using System.Collections.Generic;
 
 namespace TestInstrumentation
 {

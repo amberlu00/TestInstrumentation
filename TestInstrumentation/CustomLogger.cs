@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using TestInstrumentation;
 
-namespace Application
+namespace TestInstrumentation
 {
     public class CustomLogger
     {
