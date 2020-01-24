@@ -18,7 +18,7 @@ namespace Application
         /**
          * Additional function to add new logging strings when necessary.
          */
-        public void addUniqueLogType(string key, string value)
+        public void AddUniqueLogType(string key, string value)
         {
             KeyToLog.Add(key, value);
         }
@@ -26,7 +26,7 @@ namespace Application
         /**
          * 
          */
-        public void formattedLog(string sev, string key, params string[] args)
+        public void FormattedLog(string sev, string key, params string[] args)
         {
             string str = String.Format(KeyToLog.GetValueOrDefault(key), args);
             switch (sev)
@@ -52,7 +52,7 @@ namespace Application
                     break;
             }
         }
-        public void rawLog(string sev, string info)
+        public void RawLog(string sev, string info)
         {
             switch (sev)
 			{
