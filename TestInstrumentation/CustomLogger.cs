@@ -6,13 +6,13 @@ namespace Application
 {
     public class CustomLogger
     {
-        private Dictionary<string, string> keyToLog;
-        private BaseLogger logger;
+        private Dictionary<string, string> KeyToLog { get; set; }
+        private BaseLogger Logger { get; set; }
 
         public CustomLogger(string appType)
         {
-            logger = new BaseLogger(appType);
-            keyToLog = new Dictionary<string, string>();
+            Logger = new BaseLogger(appType);
+            KeyToLog = new Dictionary<string, string>();
         }
 
         /**
@@ -20,35 +20,35 @@ namespace Application
          */
         public void addUniqueLogType(string key, string value)
         {
-            keyToLog.Add(key, value);
+            KeyToLog.Add(key, value);
         }
 
         /**
-         * Severity levels:
+         * 
          */
         public void formattedLog(string sev, string key, params string[] args)
         {
-            string str = String.Format(keyToLog.GetValueOrDefault(key), args);
+            string str = String.Format(KeyToLog.GetValueOrDefault(key), args);
             switch (sev)
             {
                 case "INFO":
-                    logger.LogStatus(str);
+                    Logger.LogStatus(str);
                     break;
                 case "ERR":
-                    logger.LogError(str);
+                    Logger.LogError(str);
                     break;
                 case "WARN":
-                    logger.LogWarning(str);
+                    Logger.LogWarning(str);
                     break;
                 case "FATAL":
-                    logger.LogFatal(str);
+                    Logger.LogFatal(str);
                     break;
                 case "DEBUG":
-                    logger.LogDebug(str);
+                    Logger.LogDebug(str);
                     break;
                 default:
-                    logger.LogWarning(sev + " is not a valid severity level.");
-                    logger.LogStatus(str);
+                    Logger.LogWarning(sev + " is not a valid severity level.");
+                    Logger.LogStatus(str);
                     break;
             }
         }
@@ -57,23 +57,23 @@ namespace Application
             switch (sev)
 			{
                 case "INFO":
-                    logger.LogStatus(info);
+                    Logger.LogStatus(info);
                     break;
                 case "ERROR":
-                    logger.LogError(info);
+                    Logger.LogError(info);
                     break;
                 case "WARN":
-                    logger.LogWarning(info);
+                    Logger.LogWarning(info);
                     break;
                 case "FATAL":
-                    logger.LogFatal(info);
+                    Logger.LogFatal(info);
                     break;
                 case "DEBUG":
-                    logger.LogDebug(info);
+                    Logger.LogDebug(info);
                     break;
                 default:
-                    logger.LogWarning(sev + " is not a valid severity level.");
-                    logger.LogStatus(info);
+                    Logger.LogWarning(sev + " is not a valid severity level.");
+                    Logger.LogStatus(info);
                     break;
             }
         }

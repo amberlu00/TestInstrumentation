@@ -7,14 +7,12 @@ namespace TestInstrumentation
     public class BaseLogger
     {
 
-        private string appType;
         /**
          * Class for the logger.
          * @param appType: "Producer" or "Consumer". Used in file naming.
          */
         public BaseLogger(string appType)
         {
-            this.appType = appType;
             Log.Logger = new LoggerConfiguration().
                 WriteTo.File(string.Concat(appType, ".txt"),
                 rollingInterval: RollingInterval.Day).CreateLogger();
