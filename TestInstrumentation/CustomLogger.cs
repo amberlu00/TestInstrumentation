@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace TestInstrumentation
 {
     public class CustomLogger
     {
-        private Dictionary<string, FormattableString> KeyToLog { get; set; }
+        private Dictionary<string, string> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
-            KeyToLog = new Dictionary<string, FormattableString>();
+            KeyToLog = new Dictionary<string, string>();
         }
 
         /**
@@ -19,7 +20,7 @@ namespace TestInstrumentation
          * @key: The keyword to map to the template
          * @value: the interpolated template
          */
-        public void AddUniqueLogType(string key, FormattableString value)
+        public void AddUniqueLogType(string key, string value)
         {
             KeyToLog.Add(key, value);
         }
@@ -32,7 +33,8 @@ namespace TestInstrumentation
          */
         public void FormattedLog(string sev, string key, params string[] args)
         {
-            FormattableString str = KeyToLog.GetValueOrDefault(key);
+            FormattableString str = FormattableStringFactory
+                .Create(KeyToLog.GetValueOrDefault(key), args);
             RawLog(sev, string.Format(str.Format, args));
         }
         /**
