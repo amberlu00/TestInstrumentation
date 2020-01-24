@@ -11,9 +11,15 @@ namespace TestInstrumentation
          */
         public BaseLogger(string appType)
         {
+            //Log.Logger = new LoggerConfiguration().
+            //    WriteTo.File(string.Concat(appType, ".txt"),
+            //    rollingInterval: RollingInterval.Day).CreateLogger();
+
             Log.Logger = new LoggerConfiguration().
-                WriteTo.File(string.Concat(appType, ".txt"),
-                rollingInterval: RollingInterval.Day).CreateLogger();
+                WriteTo.ApplicationInsights(
+                new Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration("db8b2b4f-1aee-4295-a1bd-e74e8d109d09"),
+                TelemetryConverter.Traces)
+                .CreateLogger();
         }
 
         /**
