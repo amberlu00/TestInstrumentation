@@ -13,6 +13,13 @@ namespace TestInstrumentation
         {
             Logger = new BaseLogger(appType);
             KeyToLog = new ConcurrentDictionary<string, string>();
+            SetDefaultKeys();
+        }
+
+        public void SetDefaultKeys()
+        {
+            KeyToLog.TryAdd("Exit", "Exiting the application.");
+            KeyToLog.TryAdd("Start", "Starting the application.");
         }
 
         /**
@@ -37,6 +44,7 @@ namespace TestInstrumentation
                 .Create(KeyToLog[key], args);
             RawLog(sev, string.Format(str.Format, args));
         }
+
         /**
          * Log a string directly to the sink.
          * @param sev: The severity of the message
