@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 
 namespace TestInstrumentation
 {
     public class CustomLogger
     {
-        private Dictionary<string, string> KeyToLog { get; set; }
+        private ConcurrentDictionary<string, string> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
-            KeyToLog = new Dictionary<string, string>();
+            KeyToLog = new ConcurrentDictionary<string, string>();
         }
 
         /**
@@ -22,7 +22,7 @@ namespace TestInstrumentation
          */
         public void AddUniqueLogType(string key, string value)
         {
-            KeyToLog.Add(key, value);
+            KeyToLog.AddOrUpdate(key, value, (k, v) => v);
         }
 
         /**
@@ -34,7 +34,7 @@ namespace TestInstrumentation
         public void FormattedLog(string sev, string key, params string[] args)
         {
             FormattableString str = FormattableStringFactory
-                .Create(KeyToLog.GetValueOrDefault(key), args);
+                .Create(KeyToLog[key], args);
             RawLog(sev, string.Format(str.Format, args));
         }
         /**
