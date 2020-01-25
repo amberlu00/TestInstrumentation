@@ -1,28 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace TestInstrumentation
 {
     public class CustomLogger
     {
-        private Dictionary<string, string> KeyToLog { get; set; }
+        private ConcurrentDictionary<string, string> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
-            KeyToLog = new Dictionary<string, string>();
+            KeyToLog = new ConcurrentDictionary<string, string>();
+            foreach (String file in Directory.GetFiles("/log_config", "*.json"))
+            {
+                ReadFile(file);
+            }
+            
+
+        }
+
+        /**
+         * Used for reading .json files to populate the dictionary on startup.
+         * @param filename the name of the file
+         */
+        private async void ReadFile (string filename)
+        {
+            using StreamReader sr = new StreamReader(filename);
+            // Read the stream to a string, and write the string to the console.
+            string line = await sr.ReadToEndAsync();
+            var temporary = JsonConvert.DeserializeObject<Dictionary<string, string>>(line);
+
+            foreach(KeyValuePair<string, string> pair in temporary)
+            {
+                KeyToLog.TryAdd(pair.Key, pair.Value);
+            }
+
         }
 
         /**
          * Additional function to add new logging strings when necessary.
+         * This will permanently override a keyword!!!
          * @key: The keyword to map to the template
          * @value: the interpolated template
          */
         public void AddUniqueLogType(string key, string value)
         {
-            KeyToLog.Add(key, value);
+            KeyToLog.AddOrUpdate(key, value, (k, v) => v);
+            using StreamWriter sr = new StreamWriter("/log_config/custom.json");
+            sr.Write(",\n {0} : {1}", key, value);
         }
 
         /**

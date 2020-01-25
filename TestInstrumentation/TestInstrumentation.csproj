@@ -4,12 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>1.0.4</Version>
     <RepositoryUrl>https://github.com/amberlu00/TestInstrumentation</RepositoryUrl>
-    <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="3.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="log_config\" />
