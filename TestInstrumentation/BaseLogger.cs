@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using 
 
 namespace TestInstrumentation
 {
@@ -64,6 +63,14 @@ namespace TestInstrumentation
         public void LogDebug(string info)
         {
             Log.Debug(info);
+        }
+
+        /**
+         * Flush the log to Azure, bypassing the delay.
+         */
+        public void ManualFlush()
+        {
+            telemetryClient.Flush();
         }
     }
 }
