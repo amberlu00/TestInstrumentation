@@ -1,9 +1,12 @@
 ﻿using Serilog;
+using 
 
 namespace TestInstrumentation
 {
     public class BaseLogger
     {
+
+        private Microsoft.ApplicationInsights.TelemetryClient telemetryClient { get; set; }
 
         /**
          * Class for the logger.
@@ -11,13 +14,15 @@ namespace TestInstrumentation
          */
         public BaseLogger(string appType)
         {
-            //Log.Logger = new LoggerConfiguration().
-            //    WriteTo.File(string.Concat(appType, ".txt"),
-            //    rollingInterval: RollingInterval.Day).CreateLogger();
+            telemetryClient =
+                new Microsoft.ApplicationInsights.TelemetryClient()
+                {
+                    InstrumentationKey = "db8b2b4f-1aee-4295-a1bd-e74e8d109d09"
+                };
 
             Log.Logger = new LoggerConfiguration().
                 WriteTo.ApplicationInsights(
-                new Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration("db8b2b4f-1aee-4295-a1bd-e74e8d109d09"),
+                telemetryClient,
                 TelemetryConverter.Traces)
                 .CreateLogger();
         }
@@ -37,6 +42,7 @@ namespace TestInstrumentation
         public void LogError(string info)
         {
             Log.Error(info);
+            telemetryClient.Flush();
         }
 
         /**
@@ -45,6 +51,7 @@ namespace TestInstrumentation
         public void LogFatal(string info)
         {
             Log.Fatal(info);
+            telemetryClient.Flush();
         }
         /**
          * Logs warnings.
