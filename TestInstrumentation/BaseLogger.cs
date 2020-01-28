@@ -4,6 +4,10 @@ namespace TestInstrumentation
 {
     public class BaseLogger
     {
+        /**
+        * Telemetry client.
+        */
+        private Microsoft.ApplicationInsights.TelemetryClient telemetryClient { get; set; }
 
         /**
          * Class for the logger.
@@ -11,9 +15,26 @@ namespace TestInstrumentation
          */
         public BaseLogger(string appType)
         {
-            Log.Logger = new LoggerConfiguration().
-                WriteTo.File(string.Concat(appType, ".txt"),
-                rollingInterval: RollingInterval.Day).CreateLogger();
+
+            if (System.Environment.GetEnvironmentVariable("instkey") != null)
+            {
+                telemetryClient =
+                new Microsoft.ApplicationInsights.TelemetryClient()
+                {
+                    InstrumentationKey = System.Environment.GetEnvironmentVariable("instkey")
+                };
+                Log.Logger = new LoggerConfiguration().
+                    WriteTo.ApplicationInsights(
+                    telemetryClient,
+                    TelemetryConverter.Traces)
+                    .CreateLogger();
+            }
+            else
+            {
+                Log.Logger = new LoggerConfiguration().
+                    WriteTo.File(string.Concat(appType, ".txt"),
+                    rollingInterval: RollingInterval.Day).CreateLogger();
+            }
         }
 
         /**
