@@ -87,7 +87,7 @@ namespace TestInstrumentation
             }
         }
 
-        public void CloseApplication()
+        public void CloseLogger()
         {
             using (StreamWriter sw = new StreamWriter("keys.json", false))
             {
