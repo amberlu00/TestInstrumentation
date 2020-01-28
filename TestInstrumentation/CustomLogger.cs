@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
 using System.IO;
+using System.Threading;
 using Newtonsoft.Json;
 
 namespace TestInstrumentation
@@ -10,12 +11,17 @@ namespace TestInstrumentation
     {
         private ConcurrentDictionary<string, string> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
+        private Timer timer { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
             KeyToLog = new ConcurrentDictionary<string, string>();
             SetDefaultKeys();
+            new Timer((e) => ManualFlush(),
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromMinutes(1));
         }
 
         public void SetDefaultKeys()
@@ -99,6 +105,7 @@ namespace TestInstrumentation
             {
                 sw.Write(JsonConvert.SerializeObject(KeyToLog));
             }
+            timer.Dispose();
         }
 
         /**
