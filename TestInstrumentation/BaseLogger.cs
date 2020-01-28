@@ -52,6 +52,7 @@ namespace TestInstrumentation
         public void LogError(string info)
         {
             Log.Error(info);
+            ManualFlush();
         }
 
         /**
@@ -60,6 +61,7 @@ namespace TestInstrumentation
         public void LogFatal(string info)
         {
             Log.Fatal(info);
+            ManualFlush();
         }
         /**
          * Logs warnings.
@@ -72,6 +74,14 @@ namespace TestInstrumentation
         public void LogDebug(string info)
         {
             Log.Debug(info);
+        }
+
+        /**
+         * Manually push all available logs to Azure.
+         */
+        public void ManualFlush()
+        {
+            telemetryClient.Flush();
         }
     }
 }

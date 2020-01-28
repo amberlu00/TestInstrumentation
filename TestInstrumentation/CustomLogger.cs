@@ -87,12 +87,27 @@ namespace TestInstrumentation
             }
         }
 
+        /**
+         * Call this when closing the application or stopping logging. This
+         * automatically flushes all pending logs to Azure and updates the
+         * keys dictionary.
+         */
         public void CloseLogger()
         {
+            ManualFlush();
             using (StreamWriter sw = new StreamWriter("keys.json", false))
             {
                 sw.Write(JsonConvert.SerializeObject(KeyToLog));
             }
+        }
+
+        /**
+         * Flush the log to Azure. Whenever waiting for Azure can't wait, such
+         * as application shutdown, call this function.
+         */
+        public void ManualFlush()
+        {
+            Logger.ManualFlush();
         }
     }
 }
