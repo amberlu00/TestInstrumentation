@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace TestInstrumentation
 {
@@ -18,6 +20,15 @@ namespace TestInstrumentation
 
         public void SetDefaultKeys()
         {
+            if (File.Exists("keys.json"))
+            {
+                using (StreamReader sr = new StreamReader("keys.json"))
+                {
+                    KeyToLog = JsonConvert
+                        .DeserializeObject<ConcurrentDictionary<string, string>>(sr.ReadLine());
+                }
+            }
+
             KeyToLog.TryAdd("Exit", "Exiting the application.");
             KeyToLog.TryAdd("Start", "Starting the application.");
         }
@@ -73,6 +84,14 @@ namespace TestInstrumentation
                     Logger.LogWarning(sev + " is not a valid severity level.");
                     Logger.LogStatus(info);
                     break;
+            }
+        }
+
+        public void CloseApplication()
+        {
+            using (StreamWriter sw = new StreamWriter("keys.json", false))
+            {
+                sw.Write(JsonConvert.SerializeObject(KeyToLog));
             }
         }
     }
