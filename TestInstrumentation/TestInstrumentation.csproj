@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.0.2</Version>
+    <Version>1.0.12</Version>
     <RepositoryUrl>https://github.com/amberlu00/TestInstrumentation</RepositoryUrl>
     <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>

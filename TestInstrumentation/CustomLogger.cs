@@ -10,9 +10,9 @@ namespace TestInstrumentation
         private BaseLogger Logger { get; set; }
         private Timer Timer { get; set; }
 
-        public CustomLogger(string appType)
+        public CustomLogger(string Key)
         {
-            Logger = new BaseLogger(appType);
+            Logger = new BaseLogger(Key);
             KeyToLog = new Dictionary<string, FormattableString>();
             Timer = new Timer((e) => ManualFlush(),
                 null,
@@ -73,8 +73,8 @@ namespace TestInstrumentation
         }
 
         /**
-        * Flush the log to Azure. Whenever waiting for Azure can't wait, such as application shutdown, call this
-        * function.
+        * Flush the log to Azure. Whenever waiting for Azure can't wait, such
+        * as application shutdown, call this function.
         */
         public void ManualFlush()
         {
