@@ -9,7 +9,7 @@ Our instrumentation provides some added functionality on top of logging so that 
 
 ### Log Flexibly
 
-This package is a wrapper around a Serilog + Application Insights pipeline. This allows us to make whatever changes we deem necessary without disrupting the Producer/Consumer systems that already rely on us for their logging. Just make the calls to our library based on the CustomLogger.cs file and we will handle the rest 😀
+This package is a wrapper around a Serilog that automatically sends logs to Azure's Application Insights. This allows us to make whatever changes we deem necessary without disrupting the Producer/Consumer systems that already rely on us for their logging. Just make the calls to our library based on the CustomLogger.cs file and we will handle the rest 😀
 
 ### Example Usage
 
