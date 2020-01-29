@@ -9,29 +9,20 @@ namespace TestInstrumentation
 
         /**
          * Class for the logger.
-         * @param appType: "Producer" or "Consumer". Used in file naming.
+         * @param key: Instrumentation key
          */
-        public BaseLogger(string appType)
+        public BaseLogger(string Key)
         {
-            if (System.Environment.GetEnvironmentVariable("instkey") != null)
-            {
-                telemetryClient =
-                new Microsoft.ApplicationInsights.TelemetryClient()
-                {
-                    InstrumentationKey = System.Environment.GetEnvironmentVariable("instkey")
-                };
+            telemetryClient =
+             new Microsoft.ApplicationInsights.TelemetryClient()
+             {
+                 InstrumentationKey = Key
+             };
                 Log.Logger = new LoggerConfiguration().
                     WriteTo.ApplicationInsights(
                     telemetryClient,
                     TelemetryConverter.Traces)
                     .CreateLogger();
-            }
-            else
-            {
-                Log.Logger = new LoggerConfiguration().
-                    WriteTo.File(string.Concat(appType, ".txt"),
-                    rollingInterval: RollingInterval.Day).CreateLogger();
-            }
         }
 
         /**
