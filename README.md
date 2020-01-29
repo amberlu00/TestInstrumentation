@@ -85,6 +85,6 @@ Alternatively, there exists a method called `RawLog(String sev, String info)` wh
 
 1. Pull the code from here.
 2. In the command line of the repository you just pulled (TestInstrumentation), run `dotnet pack`.
-3. In the Visual Studio instance of the code that wants to download the package, go to the Nuget Package Manager => Configure Sources (in the same tab that is defaulted to nuget.org) and find the local folder that contains the .nupkg called "TestInstrumentation.1.0.15.nupkg". Set this folder as a new source.
+3. In the Visual Studio instance of the code that wants to download the package, go to the Nuget Package Manager => Configure Sources (in the same tab that is defaulted to nuget.org; this is in the top-left corner for Macs and the top-right corner for Windows) and find the local folder that contains the .nupkg called "TestInstrumentation.1.0.15.nupkg" (should be in  ../TestInstrumentation/bin/Debug/). Set this folder as a new source. 
 4. Add the package.
 
