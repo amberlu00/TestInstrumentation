@@ -82,20 +82,9 @@ Now, for subsequent logs of "received" type, you can just use that key and save 
 Alternatively, there exists a method called `RawLog(String sev, String info)` which allows you to log whatever you want in a "hard coded" way, in case you only need to log something once or for whatever reason don't want to use the shortcut we provided.
 
 #### How to use this library
-We are currently figuring out how to export this library to a version control tool like Azure DevOps so that people can receive changes without having to redownload the .nupkg. For now, unfortunately there is no easy way to update the code. You will have to:
-
-1. DM us for a nupkg.
-
-OR
 
 1. Pull the code from here.
 2. In the command line of the repository you just pulled (TestInstrumentation), run `dotnet pack`.
-3. In the Visual Studio instance of the code that wants to download the package, go to Project > Manage NuGet Packages > Configure Sources (in the same tab that is defaulted to nuget.org) and find the local folder that contains the .nupkg called "TestInstrumentation.1.0.0.nupkg". Set this folder as a new source.
+3. In the Visual Studio instance of the code that wants to download the package, go to the Nuget Package Manager => Configure Sources (in the same tab that is defaulted to nuget.org) and find the local folder that contains the .nupkg called "TestInstrumentation.1.0.15.nupkg". Set this folder as a new source.
 4. Add the package.
 
-Also, we have lots of testing to do. If (God bless u) you actually pull this code, let us know about bugs ASAP! <3
-
-#### What's next
-1. The code is largely untested.
-2. Real DevOps ... soon.
-3. Lots of weird package stuff going on. :( Things aren't always updating correctly...
