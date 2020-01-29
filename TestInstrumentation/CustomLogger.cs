@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace TestInstrumentation
 {
@@ -7,11 +8,16 @@ namespace TestInstrumentation
     {
         private Dictionary<string, FormattableString> KeyToLog { get; set; }
         private BaseLogger Logger { get; set; }
+        private Timer Timer { get; set; }
 
         public CustomLogger(string appType)
         {
             Logger = new BaseLogger(appType);
             KeyToLog = new Dictionary<string, FormattableString>();
+            Timer = new Timer((e) => ManualFlush(),
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromSeconds(30));
         }
 
         /**
@@ -73,6 +79,16 @@ namespace TestInstrumentation
         public void ManualFlush()
         {
             Logger.ManualFlush();
+        }
+
+        /**
+        * If there is a function that the application calls on close, use this
+        * code.
+        */
+        public void CloseLogger()
+        {
+            Timer.Dispose();
+            ManualFlush();
         }
     }
 }
