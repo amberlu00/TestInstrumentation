@@ -17,13 +17,11 @@ This package is a wrapper around a Serilog that automatically sends logs to Azur
 
 You will need to initialize an instance of the CustomLogger class in your code.
 
-`CustomLogger cl = new CustomLogger(appType);`
+`CustomLogger cl = new CustomLogger(Key);`
 
-where appType is the name of the application (such as "producer" or "consumer"). This is used in naming the file that the system logs to.
+where Key is the instrumentation key used to connect to Application Insights. Logs can be viewed on the Application Insights dashboard under the Logs in the left-hand side.
 
-The log file will be named {appType}{date}.txt.
-
-All log entries will be formatted in the following way.
+All log entries will be formatted in the following way:
 
 `"{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}"`
 
@@ -36,8 +34,6 @@ All log entries will be formatted in the following way.
 3. The message is the logged message.
 
 4. Any exceptions are written afterwards.
-
-We have the capability to either log in a preset formatted manner using string interpolation or the ability to log raw strings. Please not that the string interpolation is not completely tested yet!
 
 #### Formatted logging
 Say the consumer wants to log when something was received in the format "Received X of Y data", where X is the size of the data and Y is the type of data received.
