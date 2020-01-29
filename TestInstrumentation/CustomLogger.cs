@@ -89,6 +89,7 @@ namespace TestInstrumentation
         {
             Timer.Dispose();
             ManualFlush();
+            Thread.Sleep(5000);
         }
     }
 }
