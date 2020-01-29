@@ -9,20 +9,29 @@ namespace TestInstrumentation
 
         /**
          * Class for the logger.
-         * @param Key: The instrumentation key to log to Azure.
+         * @param appType: "Producer" or "Consumer". Used in file naming.
          */
-        public BaseLogger(string Key)
+        public BaseLogger(string appType)
         {
-          telemetryClient =
+            if (System.Environment.GetEnvironmentVariable("instkey") != null)
+            {
+                telemetryClient =
                 new Microsoft.ApplicationInsights.TelemetryClient()
                 {
-                    InstrumentationKey = Key
+                    InstrumentationKey = System.Environment.GetEnvironmentVariable("instkey")
                 };
                 Log.Logger = new LoggerConfiguration().
                     WriteTo.ApplicationInsights(
                     telemetryClient,
                     TelemetryConverter.Traces)
                     .CreateLogger();
+            }
+            else
+            {
+                Log.Logger = new LoggerConfiguration().
+                    WriteTo.File(string.Concat(appType, ".txt"),
+                    rollingInterval: RollingInterval.Day).CreateLogger();
+            }
         }
 
         /**

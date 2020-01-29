@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Version>1.0.13</Version>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Version>1.0.14</Version>
     <RepositoryUrl>https://github.com/amberlu00/TestInstrumentation</RepositoryUrl>
     <ReleaseVersion>0.1.1</ReleaseVersion>
   </PropertyGroup>
